@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+}
+
+/* Custom font font-family overrides for site-settings configuration */
+.font-sans-style {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.font-serif-style {
+  font-family: 'Playfair Display', 'Noto Sans KR', serif;
+}
+
+.font-display-style {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+}
+
+.font-mono-style {
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
+}
+
+/* Elegant glassmorphism & gradients */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark-glass {
+  background: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glow-green {
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+}
+
+.glow-purple {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.glow-orange {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.15);
+}
+
+/* Selection and editing animations */
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.admin-active-indicator {
+  animation: pulseGlow 2s infinite ease-in-out;
+}

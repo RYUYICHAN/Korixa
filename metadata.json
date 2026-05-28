@@ -1,0 +1,6 @@
+{
+  "name": "KORIXA 코릭사",
+  "description": "하이엔드 한국 브랜드 디자인 & 웹 개발 에이전시 KORIXA의 공식 인터랙티브 웹사이트 및 관리용 실시간 편집 시스템입니다.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
