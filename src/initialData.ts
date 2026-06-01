@@ -18,57 +18,75 @@ export const defaultSiteSettings: SiteSettings = {
 export const defaultPortfolios: PortfolioItem[] = [
   {
     id: "port-1",
-    title: "스마트 단기 무인 보관 시스템 (KORIXA Smart Locker-S)",
-    category: "Logo",
-    client: "서울교통공사 및 메트로 쇼핑몰",
+    title: "유료 및 무료 다기능 스마트 사물함 (KORIXA Multi Smart Locker)",
+    category: "Smart",
+    client: "스파렉스 랜드 및 전국 공공 문화체육센터",
     imageUrl: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=600",
-    description: "지하철역 및 초고층 랜드마크용 보관함으로, 모바일 페이먼트 결제 연동 터치 스크린과 실시간 배정 시스템이 가동되는 미래형 스마트 스테이션. 퍼플, 주황, 녹색의 하모니.",
+    description: "터치스크린 키오스크와 QR코드, 신용카드 결제 엔진이 탑재되어 유료/무료 동적 모드 설정이 실시간으로 지원되는 최첨단 지능형 보관 솔루션입니다.",
     date: "2026.03"
   },
   {
     id: "port-2",
-    title: "프리미엄 비즈니스 오피스 사물함 (KORIXA Business Locker)",
-    category: "Branding",
-    client: "판교 카카오 테크허브 신사옥",
-    imageUrl: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&q=80&w=600",
-    description: "스마트 오피스용 다이얼 및 모바일 사원증 NFC 자동 언락 사물함. 감각적인 퍼플 라인 익스테리어와 친환경 목재/강판 믹스 매치 피니시.",
+    title: "세대별 주거지 및 빌딩 공용 통합 사물함 (KORIXA Resident Shared Locker)",
+    category: "Smart",
+    client: "헬리오시티 대단지 아파트 및 업무용 메가타워 빌딩",
+    imageUrl: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&q=80&w=600",
+    description: "입주민 NFC 카드 및 모바일 동기화 전용 키패드가 결합된 세대 매칭형 공용 택배 및 물품 보관 사물함으로 공간 편의성과 방수 보안을 완비하였습니다.",
     date: "2026.04"
   },
   {
     id: "port-3",
-    title: "주거 단지형 지능형 무인 택배함 (KORIXA Parcel Garden)",
-    category: "Logo",
-    client: "자이 앤 프레스티지 대단지 아파트",
-    imageUrl: "https://images.unsplash.com/photo-1510074377623-8cf13fb86c08?auto=format&fit=crop&q=80&w=600",
-    description: "아파트 단지 특화형 비대면 무인 익스프레스 자동 보관 락커 시스템. 눈과 비를 완벽 차단하는 실외용 특수 도장 기술과 엠비언트 그린 발광 키패드 적용.",
+    title: "프리미엄 무소음 ABS 플라스틱 사물함 (KORIXA Tough ABS Locker)",
+    category: "Standard",
+    client: "강남 명문 오션 피트니스 및 스포츠 사우나 락커룸",
+    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600",
+    description: "부식과 충격에 극도로 강한 친환경 고강도 ABS 재질을 채택하여 물기가 많은 레포츠 시설 및 실외에서도 뒤틀림이나 녹 발생 없이 반영구적으로 보존됩니다.",
     date: "2026.02"
   },
   {
     id: "port-4",
-    title: "럭셔리 골프 & 피트니스 클럽 락커 (KORIXA Royal Club Sports)",
-    category: "Branding",
-    client: "해슬리 나인브릿지 CC 최고급 클럽하우스",
-    imageUrl: "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80&w=600",
-    description: "원목 가구 비례 디자인과 내장형 방수 정밀 실린더 도어록이 장착된 프리미엄 피트니스 락커룸. 코릭사의 주황 컬러 가죽 시팅 벤치와의 일체형 구축.",
+    title: "원목 감성의 최고급 목재 친환경 사물함 (KORIXA Crafted Wood Locker)",
+    category: "Standard",
+    client: "대기업 본사 오피스 임원실 및 청담 프라이빗 라운지",
+    imageUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=600",
+    description: "유해물질 방출 제로 친환경 도료를 입힌 고밀도 원목 질감 보드로 맞춤 제작되어 중후한 품격을 선사하며, 원격 실린더 스마트락이 빌트인되어 마찰을 제어합니다.",
     date: "2026.05"
   },
   {
     id: "port-5",
-    title: "콜드 체인 바이오 신선 식품 락커 (KORIXA Frozen Shield)",
-    category: "Website",
-    client: "마켓컬리 콜센터 로지스틱스",
-    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600",
-    description: "고정밀 인버터 압축기를 결합하여 영하 18도부터 영하 2도까지 오차 범위 0.2도 내에서 정밀 통제하는 스마트 바이오 콜드-스토리지 보관 키오스크 챔버 관리용 웹 연동.",
+    title: "정밀 강판 절곡 고기능 철제 사물함 (KORIXA Heavy Steel Cabinets)",
+    category: "Standard",
+    client: "현대 정밀 생산 기지 및 남동공단 물류 스마트 연구실",
+    imageUrl: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&q=80&w=600",
+    description: "정밀 절곡 1.2t 고강도 아연강판과 Pantone 색상을 완전하게 구현하는 고온 친환경 분체도장을 적용하여 물리적인 외압 및 기후 변화에도 녹과 변색 없이 내구성을 지킵니다.",
     date: "2026.01"
   },
   {
     id: "port-6",
-    title: "무인 독서실 & 하이브리드 좌석 연동 사물함 (KORIXA Study Center)",
-    category: "Website",
-    client: "작심독서실 전국 직영 체인망",
-    imageUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600",
-    description: "독서실 및 공유 스페이스 플랫폼 전용 락커로 만기 알림 발송, 키오스크 결제 연동 자동 기한 차단 기술이 완벽 연계된 저소음 충격 분산형 전자 락커 제어 웹.",
+    title: "스마트 전자기기 및 핸드폰 특화 보관함 (KORIXA Tech Cradle Mobile)",
+    category: "Special",
+    client: "판교 바이오 R&D 연구센터 및 테크노밸리 보안 회의실",
+    imageUrl: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=600",
+    description: "개별 수납 칸마다 고성능 충전 고속 커넥터와 도난 방지용 전자 감지 키패드가 탑재된 정보 보안 전용 핸드폰 및 태블릿 특화 보관 솔루션입니다.",
     date: "2026.05"
+  },
+  {
+    id: "port-7",
+    title: "AI 센서 기반 지능형 재고관리 사물함 (KORIXA Smart Stock-Keeper)",
+    category: "Special",
+    client: "종합 의료원 특수 전문 의약품실 및 자재 물류 허브",
+    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600",
+    description: "잠금 장치 실시간 관제와 정밀 중량 마이크로 센서가 결합하여 물품 입출고 내역이 즉시 클라우드망에 기록 완료되고 보관칸 재고 수량이 자동 동기화됩니다.",
+    date: "2026.05"
+  },
+  {
+    id: "port-8",
+    title: "스마트 호텔 캐리어 & 대형 수하물 보관함 (KORIXA Luggage Butler)",
+    category: "Special",
+    client: "파라다이스 백화점 광장 및 공항 허브 리조트 라운지",
+    imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=600",
+    description: "초대형 여행용 캐리어와 골프백 등을 직립 보관하도록 맞춤 특화된 대형 스토리지 시스템으로, 터치 키오스크 결제 연동 제어로 장갑이나 손 보호 기능을 극대화하였습니다.",
+    date: "2026.04"
   }
 ];
 
@@ -86,7 +104,7 @@ export const defaultBlogs: BlogItem[] = [
   {
     id: "blog-2",
     title: "고온 친환경 분체도장 기법과 방청 기술: 절대로 녹슬지 않는 보관함 제작 핵심 공정",
-    excerpt: "코릭사가 독자 개발한 극초단파 열처리 정밀 도장과 퍼플, 오렌지, 에메랄드 그린 컬러 표현을 위한 고기능 안료 배합 공정의 모든 것.",
+    excerpt: "코릭사가 독자 개발한 극초단파 열처리 정밀 도장과 퍼플, 오렌지, 에메랄드 그린 제품 표현을 위한 pantone 색상컬러칩 그대로의 표현 공정.",
     content: "헬스장, 해수목욕탕, 레포츠 센터 등 다습한 고부식 환경에서 사물함 문짝이 어긋나거나 흰색 녹 및 시트지 벌어짐 현상은 치명적입니다. 코릭사 스마트 보관함은 냉간압연 아연도금 강판을 정밀 레이저 절단한 후, 유해 물질 배출이 제로에 가까운 친환경 열 가공 보강제를 180도 고온에서 분체 응축하여 기후 변화나 내외부 충격 가압에도 25년 이상 원본 색상과 매끄러운 텍스처를 안전하게 보호해 줍니다.",
     imageUrl: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=600",
     date: "2026.05.15",
@@ -111,7 +129,7 @@ export const defaultInquiries: Inquiry[] = [
     name: "박장수 입주자대표연합 회장",
     email: "jangsoo@xi-prestige.co.kr",
     phone: "010-4492-3810",
-    serviceType: "All-in-One",
+    serviceType: "Consult",
     message: "성동구 신축 대단지 아파트 총 1,800세대에 각 동 로비마다 매립식 스마트 택배 무인 시스템 및 자전거 무인 보관 시설을 올인원으로 도킹 도입하고자 합니다. 단체 제휴 도면 지원과 코릭사의 주황색 시그니처 락커 실리콘 샘플 견적이 시급합니다.",
     date: "2026-05-27 15:42",
     status: "pending"
@@ -121,7 +139,7 @@ export const defaultInquiries: Inquiry[] = [
     name: "한상엽 기획이사",
     email: "syhan@smartworking.io",
     phone: "010-9921-5503",
-    serviceType: "Website",
+    serviceType: "Smart",
     message: "공유 피트니스 및 거점 러닝 클럽용 신형 블루투스 스마트 보관함 300대 대량 발주 및 관리용 키오스크 12인치 터치 모니터 연동 사양 납품 상담을 요합니다.",
     date: "2026-05-26 11:20",
     status: "completed"

@@ -18,22 +18,20 @@ export default function PortfolioGrid({ portfolios, settings }: PortfolioGridPro
 
   const categories = [
     { id: "All", label: "전체" },
-    { id: "Logo", label: "로고 디자인" },
-    { id: "Website", label: "웹사이트 개발" },
-    { id: "Branding", label: "브랜딩 패키지" },
+    { id: "Smart", label: "스마트 사물함" },
+    { id: "Standard", label: "소재별 일반 사물함" },
+    { id: "Special", label: "특수 목적형 사물함" },
   ];
 
   const mapCategoryToId = (cat: string) => {
-    if (cat === "Logo") return "Logo";
-    if (cat === "Website") return "Website";
-    return "Branding"; // Branding
+    if (cat === "Smart") return "Smart";
+    if (cat === "Standard") return "Standard";
+    return "Special";
   };
 
   const filteredPortfolios = portfolios.filter((item) => {
     if (selectedCategory === "All") return true;
-    if (selectedCategory === "Logo") return item.category === "Logo";
-    if (selectedCategory === "Website") return item.category === "Website";
-    return item.category === "Branding";
+    return item.category === selectedCategory;
   });
 
   const getAccentTextClass = () => {
@@ -93,10 +91,10 @@ export default function PortfolioGrid({ portfolios, settings }: PortfolioGridPro
               PORTFOLIO SHOWCASE
             </span>
             <h2 className={`text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-950 mt-2 ${getFontClass()}`}>
-              크리에이티브의 완성형 레코딩
+              코릭사 제품 포트폴리오
             </h2>
             <p className="text-gray-500 text-sm mt-3 max-w-xl">
-              브랜드의 탄생을 장식한 맞춤 수작업 로고 디자인부터 비즈니스를 선도하는 하이성능 고감각 웹 플랫폼의 완성작들을 필터링해 감상하세요.
+              대한민국 최고의 스마트 통합 사물함 브랜드 코릭사가 공용 주거, 오피스, 의료, 레포츠 현장 등에 실제 설계 및 납품한 대표 레퍼런스를 확인하세요.
             </p>
           </div>
 
@@ -146,7 +144,7 @@ export default function PortfolioGrid({ portfolios, settings }: PortfolioGridPro
                   />
                   {/* Category badge */}
                   <span className={`absolute top-4 left-4 text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full border shadow-sm ${getAccentLightBgClass()}`}>
-                    {item.category === "Logo" ? "로고" : item.category === "Website" ? "웹사이트" : "브랜딩"}
+                    {item.category === "Smart" ? "스마트형" : item.category === "Standard" ? "소재별 일반" : "특수 목적형"}
                   </span>
                   
                   {/* Hover visual utility layer */}
@@ -210,7 +208,7 @@ export default function PortfolioGrid({ portfolios, settings }: PortfolioGridPro
               <div className="p-6 sm:p-8 overflow-y-auto">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span className={`text-[10px] font-bold uppercase py-1 px-3 border rounded-full tracking-wider ${getAccentLightBgClass()}`}>
-                    {selectedWork.category === "Logo" ? "로고 디자인" : selectedWork.category === "Website" ? "웹사이트 개발" : "브랜딩 패키지"}
+                    {selectedWork.category === "Smart" ? "스마트 사물함" : selectedWork.category === "Standard" ? "소재별 일반 사물함" : "특수 목적형 사물함"}
                   </span>
                   <span className="text-[11px] font-mono text-gray-400 bg-gray-50 border border-gray-100 px-2 py-1 rounded">
                     제작 시기: {selectedWork.date}

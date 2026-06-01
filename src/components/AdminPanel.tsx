@@ -61,7 +61,7 @@ export default function AdminPanel({
   const [editingPortId, setEditingPortId] = useState<string | null>(null);
   const [portForm, setPortForm] = useState<Omit<PortfolioItem, "id">>({
     title: "",
-    category: "Logo",
+    category: "Smart",
     client: "",
     imageUrl: "",
     description: "",
@@ -114,12 +114,12 @@ export default function AdminPanel({
   const addNewPortfolio = () => {
     const newItem: PortfolioItem = {
       id: "port-" + Date.now(),
-      title: "새 수작업 포트폴리오 사례",
-      category: "Logo",
-      client: "클라이언트사 명",
-      imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600",
-      description: "로고 심볼 또는 테크니컬 기능 구현에 대한 매니징 상세 설명입니다. 관리 콘솔을 활용해 변경하세요.",
-      date: "2026.05"
+      title: "신규 스마트/소재별 보관함 납품 사례",
+      category: "Smart",
+      client: "신규 클라이언트사",
+      imageUrl: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=600",
+      description: "사물함 규격 및 정밀 하드웨어, 스마트 제어 솔루션 구축에 관한 납품 상세 정보입니다. 관리자 대시보드에서 직접 내용을 수정하실 수 있습니다.",
+      date: "2026.06"
     };
     setPortfolios([newItem, ...portfolios]);
     startPortfolioEdit(newItem);
@@ -507,9 +507,9 @@ export default function AdminPanel({
                         onChange={(e) => setPortForm({ ...portForm, category: e.target.value as any })}
                         className="w-full px-3 py-2 bg-slate-800 rounded text-xs text-white focus:outline-none"
                       >
-                        <option value="Logo">Logo (로고 디자인)</option>
-                        <option value="Website">Website (웹사이트 개발)</option>
-                        <option value="Branding">Branding (브랜딩 패키지)</option>
+                        <option value="Smart">Smart (스마트 사물함)</option>
+                        <option value="Standard">Standard (소재별 일반 사물함)</option>
+                        <option value="Special">Special (특수 목적형 사물함)</option>
                       </select>
                     </div>
                   </div>
@@ -588,9 +588,9 @@ export default function AdminPanel({
                       <div>
                         <div className="flex items-center gap-1.5">
                           <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
-                            item.category === "Logo" ? "bg-emerald-500/20 text-emerald-400" : item.category === "Website" ? "bg-blue-500/20 text-blue-400" : "bg-purple-500/20 text-purple-400"
+                            item.category === "Smart" ? "bg-emerald-500/20 text-emerald-400" : item.category === "Standard" ? "bg-blue-500/20 text-blue-400" : "bg-purple-500/20 text-purple-400"
                           }`}>
-                            {item.category}
+                            {item.category === "Smart" ? "스마트형" : item.category === "Standard" ? "소재별 일반" : "특수 목적형"}
                           </span>
                           <span className="text-[10px] text-slate-500 font-mono">{item.client} • {item.date}</span>
                         </div>
@@ -941,9 +941,9 @@ export default function AdminPanel({
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <span className="font-bold text-white text-sm">{inq.name}</span>
                             <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
-                              inq.serviceType === "All-in-One" ? "bg-purple-600/30 text-purple-300" : inq.serviceType === "Logo" ? "bg-emerald-500/20 text-emerald-300" : "bg-blue-500/20 text-blue-300"
+                              inq.serviceType === "Consult" ? "bg-purple-600/30 text-purple-300" : inq.serviceType === "Smart" ? "bg-emerald-500/20 text-emerald-300" : "bg-blue-500/20 text-blue-300"
                             }`}>
-                              {inq.serviceType}
+                              {inq.serviceType === "Consult" ? "전문 상담" : inq.serviceType === "Smart" ? "스마트형" : "소재별 일반"}
                             </span>
                             <span className="text-[10px] text-slate-500 font-mono">{inq.date}</span>
                           </div>

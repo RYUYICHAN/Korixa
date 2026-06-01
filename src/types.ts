@@ -17,7 +17,7 @@ export interface SiteSettings {
 export interface PortfolioItem {
   id: string;
   title: string;
-  category: "Logo" | "Website" | "Branding";
+  category: "Smart" | "Standard" | "Special";
   client: string;
   imageUrl: string;
   description: string;
@@ -40,7 +40,7 @@ export interface Inquiry {
   name: string;
   email: string;
   phone: string;
-  serviceType: "Logo" | "Website" | "All-in-One";
+  serviceType: "Smart" | "Standard" | "Consult";
   message: string;
   date: string;
   status: "pending" | "completed";

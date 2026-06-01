@@ -36,7 +36,31 @@ export default function App() {
   const [portfolios, setPortfolios] = useState<PortfolioItem[]>(() => {
     try {
       const cached = localStorage.getItem("korixa_portfolios");
-      return cached ? JSON.parse(cached) : defaultPortfolios;
+      if (cached) {
+        const parsed: PortfolioItem[] = JSON.parse(cached);
+        // Check if there are legacy categories like 'Logo', 'Website', or 'Branding'
+        const hasLegacyCategory = parsed.some(
+          (item: any) =>
+            item.category === "Logo" ||
+            item.category === "Website" ||
+            item.category === "Branding"
+        );
+        // Check if there are legacy images that mismatch product descriptions (e.g. grass, high-vis jacket, bicycle)
+        const hasLegacyImages = parsed.some(
+          (item: any) =>
+            item.imageUrl.includes("1510074377623") ||
+            item.imageUrl.includes("1535131749006") ||
+            item.imageUrl.includes("1504917595217") ||
+            item.imageUrl.includes("1584622650111-993a426fbf0a") // replace old port-6 tech locker image with tapping keyless pad
+        );
+        // Force sync with newly updated comprehensive defaultPortfolios if legacy cache is detected
+        if (hasLegacyCategory || hasLegacyImages || parsed.length < defaultPortfolios.length) {
+          localStorage.setItem("korixa_portfolios", JSON.stringify(defaultPortfolios));
+          return defaultPortfolios;
+        }
+        return parsed;
+      }
+      return defaultPortfolios;
     } catch {
       return defaultPortfolios;
     }
@@ -255,13 +279,12 @@ export default function App() {
 
             {/* Contacts Hub (4 columns) */}
             <div className="md:col-span-4 space-y-4">
-              <h4 className="text-xs uppercase font-extrabold text-gray-400 tracking-widest border-b border-gray-900 pb-1.5 font-mono">스튜디오 상시 연합국</h4>
-              <p className="text-xs text-gray-400 leading-normal">
-                서울 테헤란 본사: 서울특별시 강남구 테헤란로 427, 15F<br />
-                판교 테크 센터: 경기도 성남시 분당구 대왕판교로 660, 8F
+              <h4 className="text-xs uppercase font-extrabold text-gray-400 tracking-widest border-b border-gray-900 pb-1.5 font-mono">KORIXA 본사</h4>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                본사 : 인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호
               </p>
-              <div className="text-xs text-gray-500 font-mono pt-1">
-                <span>컨설팅 이메일: consulting@korixa.studio</span>
+              <div className="text-xs text-gray-400 font-mono pt-1">
+                <span>메일 : admin@korixa.co.kr</span>
               </div>
             </div>
 

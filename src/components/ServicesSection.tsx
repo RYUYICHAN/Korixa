@@ -60,7 +60,7 @@ export default function ServicesSection({ settings }: ServicesSectionProps) {
 
   const logoFeatures = [
     "정밀 레이저 절단 아연강판 공법 및 이중 완충 실린더 도어",
-    "180℃ 고온 친환경 분체 도장 (보라, 주황, 녹색 시그니처 배합)",
+    "180℃ 고온 친환경 분체 도장 (pantone 색상컬러칩 그대로 표현)",
     "방수·방진 등급의 전자기계식 솔레노이드 디지털 락 잠금 장치",
     "이동·확장이 유연한 다목적 모듈형 보관함 아키텍처",
     "공공시설 및 초고층 빌딩 설치 기준 구조 안전성 평가 우수"
@@ -84,7 +84,7 @@ export default function ServicesSection({ settings }: ServicesSectionProps) {
             OUR EXPERTISE
           </span>
           <h2 className={`text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-950 mt-2 ${getFontClass()}`}>
-            예술적 비주얼과 기술적 기능의 독보적 결합
+            감각적인 디자인과 독보적인 기술력의 결합
           </h2>
           <p className="text-gray-500 text-sm sm:text-base mt-4">
             KORIXA는 비즈니스 경쟁력을 견인하기 위해 독창적인 비주얼 정체성을 설계하고,<br className="hidden sm:inline" /> 
@@ -111,7 +111,7 @@ export default function ServicesSection({ settings }: ServicesSectionProps) {
               </div>
 
               <h3 className={`text-2xl font-bold text-gray-950 tracking-tight mb-4 ${getFontClass()}`}>
-                공학 기법 기반의 프리미엄 제조
+                생체 공학 및 IoT 기반의 스마트 프리미엄 개발
               </h3>
 
               <p className="text-gray-600 text-sm leading-relaxed mb-8">

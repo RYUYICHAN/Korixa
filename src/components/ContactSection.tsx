@@ -25,7 +25,7 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [serviceType, setServiceType] = useState<"Logo" | "Website" | "All-in-One">("All-in-One");
+  const [serviceType, setServiceType] = useState<"Smart" | "Standard" | "Consult">("Consult");
   const [message, setMessage] = useState("");
   
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,20 +33,12 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
 
   const offices: OfficeLocation[] = [
     {
-      name: "서울 에이전시 테헤란 본사 (HQ)",
-      address: "서울특별시 강남구 테헤란로 427, 위워크 타워 15층 KORIXA",
-      tel: "02-554-1598 (내선 1번)",
+      name: "인천 청라 본사 (HQ)",
+      address: "인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호",
+      tel: "",
       hours: "월 - 금, 09:30 ~ 18:30 (점심시간 12:30 ~ 13:30)",
-      desc: "브랜드 경영 기획, 마케팅 컨설팅, 로고 마스터 디자이너 상주 유닛.",
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.2348398455115!2d127.0426189!3d37.5023903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca40e02613b53%3A0xc3ec5bf200fb7454!2z7ISc7Jq47Yq567OE7IucIOqwleuCqOq1rCDsmYTrjIDroZwgNDI3!5e0!3m2!1sko!2skr!4v1700000000000!5m2!1sko!2skr"
-    },
-    {
-      name: "판교 크리에이티브 테크 센터",
-      address: "경기도 성남시 분당구 대왕판교로 660, 유스페이스 1동 801호",
-      tel: "031-602-0921 (내선 2번)",
-      hours: "월 - 금, 10:00 ~ 19:00",
-      desc: "경량 반응형 웹 프레임워크 연구진, 엔지니어링 및 호스팅 인프라 전담 부지.",
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3169.605370211566!2d127.1039832!3d37.4003058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca8006ff29eeb%3A0x8fc21077eef26bf7!2z6rK96bqw64-EIOyEseuCqOyLnCD didnOq1rCDrjIDsmZXtjJDqtZTroZwgNjYw!5e0!3m2!1sko!2skr!4v1700000000001!5m2!1sko!2skr"
+      desc: "IoT 통합 원격 제어 및 고유 Pantone 색상 개발 총괄 본사.",
+      mapEmbedUrl: "https://maps.google.com/maps?q=%EC%9D%B8%EC%B2%9C%EC%8B%9C%20%EC%84%9C%EA%B5%AC%20%EC%A4%91%EB%B4%89%EB%8C%80%EB%A1%9C%20490%20%EC%B2%AD%EB%9D%BC%EB%8D%94%EB%A6%AC%EB%B8%8C%ED%8B%B0%EC%95%84%EB%AA%A8&t=&z=16&ie=UTF8&iwloc=&output=embed"
     }
   ];
 
@@ -173,7 +165,7 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="flex items-center gap-2 pb-2 border-b border-gray-50 mb-4">
                   <Sparkles className={`w-4 h-4 ${getAccentTextClass()}`} />
-                  <span className="text-xs font-bold uppercase tracking-wider text-gray-400">프로젝트 온라인 제안서 작성</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-gray-400">상담 신청 및 견적 요청</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -222,9 +214,9 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
                       onChange={(e) => setServiceType(e.target.value as any)}
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 bg-gray-50/50"
                     >
-                      <option value="All-in-One">올인원 전체 패키지 (로고 디자인 + 웹 개발)</option>
-                      <option value="Logo">심볼 및 타이포그래피 로고 디자인</option>
-                      <option value="Website">반응형 웹 퍼포먼스 구축 개발</option>
+                      <option value="Consult">전문 보관함 상세 비상담 및 일괄 견적 문의</option>
+                      <option value="Smart">지능형 IoT 스마트 사물함 도입 문의</option>
+                      <option value="Standard">소재별 프리미엄 일반 캐비닛/사물함 대량 납품</option>
                     </select>
                   </div>
                 </div>
@@ -254,7 +246,7 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
                   className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-semibold text-white transition-all duration-300 transform active:scale-99 shadow-lg ${getAccentBgClass()}`}
                 >
                   <Send className="w-4 h-4" />
-                  <span>KORIXA 수석 매니저에게 무료 견적서 제출하기</span>
+                  <span>KORIXA 전문 상담사에게 무료 견적서 제출하기</span>
                 </button>
               </form>
             )}
@@ -266,24 +258,8 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
               <div className="flex items-center justify-between pb-3 border-b border-gray-50 mb-6">
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
                   <MapPin className={`w-4 h-4 ${getAccentTextClass()}`} />
-                  OFFICE LOCATIONS
+                  OFFICE LOCATION
                 </span>
-                
-                {/* Branch Select Tab */}
-                <div className="flex gap-1 bg-gray-50 p-1 rounded-lg border text-[10px]">
-                  <button
-                    onClick={() => setActiveOfficeIndex(0)}
-                    className={`px-2 py-1 rounded font-bold ${activeOfficeIndex === 0 ? "bg-white shadow text-gray-900" : "text-gray-400 hover:text-gray-600"}`}
-                  >
-                    서울 본사
-                  </button>
-                  <button
-                    onClick={() => setActiveOfficeIndex(1)}
-                    className={`px-2 py-1 rounded font-bold ${activeOfficeIndex === 1 ? "bg-white shadow text-gray-900" : "text-gray-400 hover:text-gray-600"}`}
-                  >
-                    판교 허브
-                  </button>
-                </div>
               </div>
 
               {/* Active office descriptions */}
@@ -301,13 +277,15 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
                     <MapPin className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
                     <span>{offices[activeOfficeIndex].address}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-gray-400 shrink-0" />
-                    <span>{offices[activeOfficeIndex].tel}</span>
-                  </div>
+                  {offices[activeOfficeIndex].tel && (
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-gray-400 shrink-0" />
+                      <span>{offices[activeOfficeIndex].tel}</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-gray-400 shrink-0" />
-                    <span>consulting@korixa.studio</span>
+                    <span>admin@korixa.co.kr</span>
                   </div>
                 </div>
               </div>

@@ -490,7 +490,7 @@ export default function Hero({ settings, onContactClick }: HeroProps) {
 
             {/* Custom Slogan Describing 2-column, 5-row specs */}
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xl">
-              정밀 하드웨어 공학으로 빚어낸 <strong className="text-gray-900 font-bold">2열 5단(10개 칸 + 중앙 키오스크)</strong> 표준 세트 구축 방식의 대표 국가브랜드 코릭사입니다. 보라, 주황, 녹색의 고기능 안료 배합 및 IoT 원격 무선 복약/제어 통신을 완비한 최고의 보안 인프라를 스마트폰 및 키오스크 연동을 통해 입체적으로 직접 제어해 보세요.
+              정밀 하드웨어 공학으로 빚어낸 <strong className="text-gray-900 font-bold">2열 5단(10개 칸 + 중앙 키오스크)</strong> 표준 세트 구축 방식의 대표 국가브랜드 코릭사입니다. IoT 원격 무선 제어 통신을 완비한 최고의 보안 인프라를 스마트폰 및 키오스크 연동을 통해 입체적으로 직접 제어해 보세요.
             </p>
 
             {/* CTAs */}
@@ -499,7 +499,7 @@ export default function Hero({ settings, onContactClick }: HeroProps) {
                 onClick={onContactClick}
                 className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-sm font-semibold text-white transition-all duration-300 transform active:scale-95 shadow-md hover:shadow-lg ${getAccentBgClass()}`}
               >
-                <span>간편 도면 설계 및 대량 공급 견적 문의</span>
+                <span>전문가에게 견적 및 상담 문의</span>
                 <ArrowRight className="w-4 h-4 translate-x-0 hover:translate-x-1 transition-transform" />
               </button>
               <button

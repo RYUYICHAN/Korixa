@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { Menu, X, Settings, ShieldAlert, Sparkles } from "lucide-react";
 import { SiteSettings } from "../types";
 import KORIXALogo from "./KORIXALogo";
+import AdminLoginModal from "./AdminLoginModal";
 
 interface NavbarProps {
   settings: SiteSettings;
@@ -24,10 +25,19 @@ export default function Navbar({
   setIsAdminMode,
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const handleAdminToggle = () => {
+    if (isAdminMode) {
+      setIsAdminMode(false);
+    } else {
+      setIsLoginOpen(true);
+    }
+  };
 
   const menuItems = [
-    { id: "home", label: "소개" },
-    { id: "services", label: "서비스" },
+    { id: "home", label: "코릭사 체험" },
+    { id: "services", label: "소개" },
     { id: "portfolio", label: "포트폴리오" },
     { id: "blog", label: "인사이트" },
     { id: "contact", label: "문의하기" },
@@ -119,7 +129,7 @@ export default function Navbar({
           {/* Action Buttons: Admin Toggle */}
           <div className="hidden md:flex items-center space-x-3">
             <button
-              onClick={() => setIsAdminMode(!isAdminMode)}
+              onClick={handleAdminToggle}
               className={`flex items-center gap-1.5 px-4.5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-sm ${
                 isAdminMode
                   ? "bg-gray-900 text-white ring-2 ring-offset-2 ring-gray-900 border-transparent"
@@ -137,7 +147,7 @@ export default function Navbar({
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center space-x-2">
             <button
-              onClick={() => setIsAdminMode(!isAdminMode)}
+              onClick={handleAdminToggle}
               className={`p-2 rounded-full transition-colors ${
                 isAdminMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-700"
               }`}
@@ -179,7 +189,7 @@ export default function Navbar({
           <div className="pt-4 px-4 border-t border-gray-100 mt-4">
             <button
               onClick={() => {
-                setIsAdminMode(!isAdminMode);
+                handleAdminToggle();
                 setIsOpen(false);
               }}
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors"
@@ -190,6 +200,13 @@ export default function Navbar({
           </div>
         </div>
       )}
+
+      <AdminLoginModal
+        settings={settings}
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={() => setIsAdminMode(true)}
+      />
     </nav>
   );
 }
