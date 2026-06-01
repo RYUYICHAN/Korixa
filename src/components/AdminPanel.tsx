@@ -24,9 +24,275 @@ import {
   Sparkles,
   RefreshCw,
   Search,
-  Eye
+  Eye,
+  Upload,
+  Image as ImageIcon
 } from "lucide-react";
 import { SiteSettings, PortfolioItem, BlogItem, Inquiry, SEOMeta } from "../types";
+
+// Core KORIXA premium high-res locker preset renders
+import multiSmartLockerImg from "../assets/images/multi_smart_locker_1780288326712.png";
+import luxurySharedStorageImg from "../assets/images/luxury_shared_storage_1780289028631.png";
+import absPlasticLockersRowImg from "../assets/images/abs_plastic_lockers_row_1780289044522.png";
+import woodenLockersImg from "../assets/images/wooden_lockers_1780289421370.png";
+import refrigeratedLockersImg from "../assets/images/refrigerated_lockers_1780289440809.png";
+import phoneChargeLockerImg from "../assets/images/phone_charge_locker_1780289916881.png";
+import smartStockLockerImg from "../assets/images/smart_stock_locker_1780289935468.png";
+import wireLuggageLockerImg from "../assets/images/wire_luggage_locker_1780290077952.png";
+
+const curatedUnsplashStock: Record<string, { url: string; label: string }[]> = {
+  Locker: [
+    { url: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=605", label: "모던 락커 시스템" },
+    { url: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&q=80&w=605", label: "차콜 캐비닛 수납" },
+    { url: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&q=80&w=605", label: "정밀 절곡 철제 캐비닛" },
+    { url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=605", label: "심플 유틸리티 락커" }
+  ],
+  Smart: [
+    { url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=605", label: "IoT 통신 모바일" },
+    { url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=605", label: "네트워크 클라우드 허브" },
+    { url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=605", label: "스마트 터치스크린 패널" }
+  ],
+  Office: [
+    { url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=605", label: "미니멀 라운지 데스크" },
+    { url: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=605", label: "인텔리전트 빌딩 오피스" },
+    { url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=605", label: "프리미엄 빌딩 조판" }
+  ],
+  Wood: [
+    { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=605", label: "최고급 원목 질감 캐비닛" },
+    { url: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&q=80&w=605", label: "내추럴 오가닉 인테리어" }
+  ],
+  Fridge: [
+    { url: "https://images.unsplash.com/photo-1584282479227-bb4ebec709ca?auto=format&fit=crop&q=80&w=605", label: "신선 보관 냉장 기술" },
+    { url: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&q=80&w=605", label: "클린 룸 온도 습도제어" }
+  ]
+};
+
+function AdminImageSelector({
+  currentUrl,
+  onSelect,
+}: {
+  currentUrl: string;
+  onSelect: (url: string) => void;
+}) {
+  const [activeTab, setActiveTab] = useState<"presets" | "upload" | "unsplash">("presets");
+  const [selectedTag, setSelectedTag] = useState("Locker");
+  const [dragActive, setDragActive] = useState(false);
+  const [freeSearchStr, setFreeSearchStr] = useState("");
+  const [searchResults, setSearchResults] = useState<{ url: string; label: string }[]>([]);
+
+  const lockerPresets = [
+    { name: "IoT 다기능 터치 스마트 락커", url: multiSmartLockerImg },
+    { name: "세대별 무인택배 아파트보관함", url: luxurySharedStorageImg },
+    { name: "친환경 고강도 야외 ABS 사물함", url: absPlasticLockersRowImg },
+    { name: "원목 감성 스마트 실린더 목재락커", url: woodenLockersImg },
+    { name: "온도순환 스마트 신선 냉장보관함", url: refrigeratedLockersImg },
+    { name: "IC 충전감지 정보보안 핸드폰함", url: phoneChargeLockerImg },
+    { name: "지능형 센서 RFID 자재 재고관리통", url: smartStockLockerImg },
+    { name: "하이브리드 와이어 Tether 캐리어락", url: wireLuggageLockerImg }
+  ];
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 1.5 * 1024 * 1024) {
+      alert("⚠️ LocalStorage 과부하 방지를 위해 1.5MB 이하의 작은 이미지 파일을 업로드해 주세요.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (loadEvt) => {
+      if (loadEvt.target?.result) {
+        onSelect(loadEvt.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragActive(false);
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
+    if (file.size > 1.5 * 1024 * 1024) {
+      alert("⚠️ 1.5MB 이하의 작은 이미지 파일을 선택해 주세요.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (loadEvt) => {
+      if (loadEvt.target?.result) {
+        onSelect(loadEvt.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleFreeSearch = () => {
+    if (!freeSearchStr.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const query = freeSearchStr.toLowerCase();
+    const matches: { url: string; label: string }[] = [];
+    Object.keys(curatedUnsplashStock).forEach((category) => {
+      if (category.toLowerCase().includes(query) || query.includes(category.toLowerCase())) {
+        matches.push(...curatedUnsplashStock[category]);
+      }
+    });
+    setSearchResults(matches.length > 0 ? matches : curatedUnsplashStock["Locker"]);
+  };
+
+  return (
+    <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-3">
+      {/* Selector Subtab Header */}
+      <div className="flex border-b border-slate-850 gap-1 pb-1">
+        {[
+          { id: "presets", label: "코릭사 프리미엄 기계 프리셋" },
+          { id: "upload", label: "🖥️ 신속 파일 업로드" },
+          { id: "unsplash", label: "🔍 Unsplash 스톡 검색" }
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveTab(tab.id as any)}
+            className={`px-3 py-1 text-[10px] font-extrabold rounded-lg transition-colors cursor-pointer ${
+              activeTab === tab.id
+                ? "bg-slate-800 text-white border border-slate-700"
+                : "text-slate-400 hover:bg-slate-900 hover:text-slate-205"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Preset Library Tab */}
+      {activeTab === "presets" && (
+        <div className="grid grid-cols-2 gap-2 max-h-[220px] overflow-y-auto pr-1">
+          {lockerPresets.map((pr) => (
+            <button
+              key={pr.name}
+              type="button"
+              onClick={() => onSelect(pr.url)}
+              className={`p-1.5 rounded-lg border text-left flex items-center gap-2 hover:bg-slate-900 transition cursor-pointer ${
+                currentUrl === pr.url ? "bg-slate-900/80 border-violet-500/60 ring-1 ring-violet-500/20" : "border-slate-850 bg-slate-950/45"
+              }`}
+            >
+              <img
+                src={pr.url}
+                alt={pr.name}
+                referrerPolicy="no-referrer"
+                className="w-10 h-10 rounded-md object-cover bg-slate-900 border border-slate-800 shrink-0"
+              />
+              <span className="text-[10px] text-slate-300 font-extrabold leading-normal select-none truncate">
+                {pr.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Upload Files Tab */}
+      {activeTab === "upload" && (
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+          onDragLeave={() => setDragActive(false)}
+          onDrop={handleDrop}
+          className={`border-2 border-dashed rounded-lg p-5 text-center flex flex-col items-center justify-center gap-2 cursor-pointer transition ${
+            dragActive ? "border-violet-500 bg-violet-500/5 text-white" : "border-slate-800 bg-slate-950/20 text-slate-450 hover:border-slate-700"
+          }`}
+        >
+          <Upload className="w-6 h-6 text-slate-510 shrink-0" />
+          <div className="space-y-1">
+            <p className="text-[11px] font-bold text-slate-200">이미지 파일을 가져다 끌어 넣으세요 (Drag & Drop)</p>
+            <p className="text-[10px] text-slate-400">또는 기기 내부 탐색기 직접 실행하기</p>
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+            className="hidden"
+            id="admin-direct-file-uploader"
+          />
+          <label
+            htmlFor="admin-direct-file-uploader"
+            className="mt-2 text-[10px] font-black px-3 py-1 bg-violet-600 hover:bg-violet-700 text-white rounded cursor-pointer uppercase tracking-tight select-none inline-block pb-1"
+          >
+            사진 파일 선택
+          </label>
+          
+          {currentUrl.startsWith("data:") && (
+            <div className="mt-3 flex items-center gap-2 bg-slate-900 p-1.5 rounded-lg border border-slate-800">
+              <img src={currentUrl} alt="preview" className="w-8 h-8 rounded-md object-cover bg-slate-950" />
+              <span className="text-[9px] text-emerald-400 font-bold block">✓ 기기 로컬 이미지 업로드 완결!</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Unsplash Search Tab */}
+      {activeTab === "unsplash" && (
+        <div className="space-y-3">
+          {/* Preset Keyword Buttons */}
+          <div className="flex flex-wrap gap-1">
+            {["Locker", "Smart", "Office", "Wood", "Fridge"].map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => { setSelectedTag(tag); setSearchResults([]); }}
+                className={`px-2 py-1 text-[9px] font-bold rounded-md transition cursor-pointer ${
+                  selectedTag === tag ? "bg-violet-600/30 text-violet-300 border border-violet-500/20" : "bg-slate-900 text-slate-400 hover:bg-slate-850"
+                }`}
+              >
+                #{tag === "Locker" ? "사물함" : tag === "Smart" ? "스마트" : tag === "Office" ? "오피스" : tag === "Wood" ? "나무/목재" : "냉장관련"}
+              </button>
+            ))}
+          </div>
+
+          {/* Search box queries */}
+          <div className="flex gap-1">
+            <input
+              type="text"
+              placeholder="예시: office, locker, steel..."
+              value={freeSearchStr}
+              onChange={(e) => setFreeSearchStr(e.target.value)}
+              className="flex-1 px-2.5 py-1.5 bg-slate-900 rounded-lg text-[10px] focus:outline-none border border-slate-800 focus:border-slate-700 text-white"
+            />
+            <button
+              type="button"
+              onClick={handleFreeSearch}
+              className="px-3 bg-slate-800 hover:bg-slate-750 text-[10px] font-bold rounded-lg text-white cursor-pointer"
+            >
+              검색
+            </button>
+          </div>
+
+          {/* Grid display outputs */}
+          <div className="grid grid-cols-3 gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+            {(searchResults.length > 0 ? searchResults : (curatedUnsplashStock[selectedTag] || [])).map((img, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => onSelect(img.url)}
+                className={`relative group rounded-md overflow-hidden aspect-video border transition cursor-pointer ${
+                  currentUrl === img.url ? "border-violet-500 ring-1 ring-violet-500/35" : "border-slate-850 hover:border-slate-700"
+                }`}
+                title={img.label}
+              >
+                <img
+                  src={img.url}
+                  alt={img.label}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-200 bg-slate-900"
+                />
+                <span className="absolute bottom-0 inset-x-0 bg-slate-950/80 text-[8px] py-0.5 text-center truncate text-slate-300 pointer-events-none">
+                  {img.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 interface AdminPanelProps {
   settings: SiteSettings;
@@ -79,6 +345,10 @@ export default function AdminPanel({
     readTime: "",
     tags: []
   });
+
+  const [showPortImgTools, setShowPortImgTools] = useState(false);
+  const [showBlogImgTools, setShowBlogImgTools] = useState(false);
+  const [showHeroImgTools, setShowHeroImgTools] = useState(false);
 
   // SEO Score calculation logic
   const calculateSEOScore = () => {
@@ -362,53 +632,164 @@ export default function AdminPanel({
                 </div>
               </div>
 
-              {/* Accent Point Color Controls & Typography Styles */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-5 bg-slate-950/40 border border-slate-800 rounded-2xl">
-                {/* Point Colors */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-2">포인트 브랜드 컬러 (체인지)</label>
+              {/* Theme Selector (4 Options) */}
+              <div className="space-y-2">
+                <label className="block text-xs font-bold text-slate-400">코릭사 라이브 테마 모드</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    { id: "light", label: "☀️ Light (밝고 모던)", desc: "깔끔하고 가시성이 뛰어난 화이트 분위기" },
+                    { id: "dark", label: "🌙 Dark (클래식 다크)", desc: "고급 철재에 어울리는 품격 있는 밤의 색상" },
+                    { id: "ivory", label: "🪵 Ivory (내추럴 아이보리)", desc: "목재 사물함에 최적인 오가닉 브라운/크림" },
+                    { id: "midnight", label: "🌌 Midnight (코스믹 네이비)", desc: "미래지향형 테크 감각의 오션 네이비 마운트" }
+                  ].map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => setSettings({ ...settings, customThemeMode: t.id as any })}
+                      className={`p-3 rounded-xl border text-left space-y-1 transition text-white cursor-pointer ${
+                        settings.customThemeMode === t.id 
+                          ? "bg-slate-800 border-violet-500 ring-1 ring-violet-500/20" 
+                          : "bg-slate-900/60 border-slate-800 hover:bg-slate-900"
+                      }`}
+                    >
+                      <span className="block text-xs font-black">{t.label}</span>
+                      <span className="block text-[9px] text-slate-400 leading-normal">{t.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Advanced Hex Color Selector & Font Combinations */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 bg-slate-950/40 border border-slate-800 rounded-2xl">
+                {/* Custom Color Picking block */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-400 mb-1">정밀 포인트 브랜드 컬러 (HEX 커스텀)</label>
+                    <p className="text-[10px] text-slate-400 mb-2">원하시는 모든 기업 및 브랜드 전용 CI 컬러 코드를 직접 주입해 보세요.</p>
+                  </div>
                   <div className="flex items-center gap-3">
-                    {[
-                      { id: "purple", label: "바이올렛 퍼플", hex: "#8B5CF6", bg: "bg-violet-500" },
-                      { id: "green", label: "에메랄드 그린", hex: "#10B981", bg: "bg-emerald-500" },
-                      { id: "orange", label: "코랄 오렌지", hex: "#F97316", bg: "bg-orange-500" }
-                    ].map((col) => (
-                      <button
-                        key={col.id}
-                        onClick={() => setSettings({ ...settings, accentColor: col.id as any })}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition ${
-                          settings.accentColor === col.id ? "bg-slate-800 ring-2 ring-slate-400 border border-transparent" : "hover:bg-slate-900 border border-slate-800"
-                        }`}
-                      >
-                        <span className={`w-3.5 h-3.5 rounded-full ${col.bg}`} />
-                        <span>{col.label}</span>
-                      </button>
-                    ))}
+                    <input
+                      type="color"
+                      value={settings.customAccentHex || "#8B5CF6"}
+                      onChange={(e) => setSettings({ ...settings, customAccentHex: e.target.value })}
+                      className="w-10 h-10 rounded-lg border-0 bg-transparent cursor-pointer shrink-0"
+                    />
+                    <input
+                      type="text"
+                      value={settings.customAccentHex || ""}
+                      placeholder="#8B5CF6 (예: 바이올렛 퍼플)"
+                      onChange={(e) => setSettings({ ...settings, customAccentHex: e.target.value })}
+                      className="flex-1 px-3 py-2 bg-slate-800 rounded-lg text-xs font-mono uppercase text-white focus:outline-none border border-slate-700"
+                    />
+                  </div>
+
+                  {/* Preset Quick Palette */}
+                  <div className="space-y-1.5 pt-2">
+                    <span className="block text-[9px] text-slate-400 font-extrabold uppercase align-middle">대기업 대표 팔레트 불러오기</span>
+                    <div className="flex flex-wrap gap-1">
+                      {[
+                        { hex: "#8B5CF6", name: "퍼플" },
+                        { hex: "#10B981", name: "에메랄드" },
+                        { hex: "#F97316", name: "오렌지" },
+                        { hex: "#0284C7", name: "삼성 블루" },
+                        { hex: "#059669", name: "네이버 그린" },
+                        { hex: "#A855F7", name: "현대 테크플레어" }
+                      ].map((pal) => (
+                        <button
+                          key={pal.hex}
+                          type="button"
+                          onClick={() => setSettings({ ...settings, customAccentHex: pal.hex })}
+                          className="px-2 py-1 bg-slate-900 hover:bg-slate-800 rounded text-[9px] font-bold text-slate-300 flex items-center gap-1 border border-slate-800 cursor-pointer"
+                        >
+                          <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: pal.hex }} />
+                          <span>{pal.name}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Fonts */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-2">글로벌 서체 스타일 조합</label>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {[
-                      { id: "sans", label: "한글 프리미엄 산스 고딕" },
-                      { id: "serif", label: "클래식 럭셔리 세리프" },
-                      { id: "display", label: "테크니컬 스페이스 폰트" },
-                      { id: "mono", label: "개발 정밀 모노 크래프트" }
-                    ].map((f) => (
-                      <button
-                        key={f.id}
-                        onClick={() => setSettings({ ...settings, fontStyle: f.id as any })}
-                        className={`px-3 py-1.5 rounded-lg text-[11px] font-bold tracking-tight text-left border ${
-                          settings.fontStyle === f.id ? "bg-slate-800 text-white border-slate-500" : "text-slate-400 border-slate-800 hover:bg-slate-900"
-                        }`}
-                      >
-                        {f.label}
-                      </button>
-                    ))}
+                {/* Typography Combos & Sizing offsets */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-400 mb-1">글로벌 서체 스타일 조합</label>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[
+                        { id: "sans", label: "한글 프리미엄 산스 고딕" },
+                        { id: "serif", label: "클래식 럭셔리 세리프" },
+                        { id: "display", label: "테크니컬 스페이스 폰트" },
+                        { id: "mono", label: "개발 정밀 모노 크래프트" }
+                      ].map((f) => (
+                        <button
+                          key={f.id}
+                          type="button"
+                          onClick={() => setSettings({ ...settings, fontStyle: f.id as any })}
+                          className={`px-3 py-1.5 rounded-lg text-[11px] font-bold tracking-tight text-left border cursor-pointer ${
+                            settings.fontStyle === f.id ? "bg-slate-800 text-white border-slate-500" : "text-slate-400 border-slate-800 hover:bg-slate-900"
+                          }`}
+                        >
+                          {f.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Sizing offsets sliders */}
+                  <div className="space-y-3 pt-2 border-t border-slate-850">
+                    <div>
+                      <div className="flex justify-between text-[10px] font-extrabold text-slate-400 mb-1">
+                        <span>메인 타이틀 폰트 크기 오프셋</span>
+                        <span className="text-violet-400 font-mono">{(settings.headingFontSizeOffset || 0) >= 0 ? `+${settings.headingFontSizeOffset || 0}` : settings.headingFontSizeOffset}px</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="-6"
+                        max="16"
+                        value={settings.headingFontSizeOffset || 0}
+                        onChange={(e) => setSettings({ ...settings, headingFontSizeOffset: parseInt(e.target.value) })}
+                        className="w-full accent-violet-500 cursor-pointer"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-[10px] font-extrabold text-slate-400 mb-1">
+                        <span>설명 본문 폰트 크기 오프셋</span>
+                        <span className="text-violet-400 font-mono">{(settings.bodyFontSizeOffset || 0) >= 0 ? `+${settings.bodyFontSizeOffset || 0}` : settings.bodyFontSizeOffset}px</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="-4"
+                        max="8"
+                        value={settings.bodyFontSizeOffset || 0}
+                        onChange={(e) => setSettings({ ...settings, bodyFontSizeOffset: parseInt(e.target.value) })}
+                        className="w-full accent-violet-500 cursor-pointer"
+                      />
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Main Hero Interactive Simulator visibility toggle */}
+              <div className="p-4 bg-slate-950/40 border border-slate-800 rounded-xl flex items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <span className="block text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                    메인 히어로 실시간 보관함 입체 시뮬레이터 활성화
+                  </span>
+                  <p className="text-[10px] text-slate-400 leading-normal">
+                    이 항목을 끄면 보관함 기계 인터랙션이 완전히 감춰지며 홈페이지가 심플하고 고급도가 높은 미니멀 1단 구조로 중앙 확장 정렬됩니다.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSettings({ ...settings, showLockerSimulator: settings.showLockerSimulator === false ? true : false })}
+                  className={`w-12 h-6 rounded-full p-1 transition-colors shrink-0 cursor-pointer ${
+                    settings.showLockerSimulator !== false ? "bg-violet-600" : "bg-slate-700"
+                  }`}
+                >
+                  <div className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-250 ${
+                    settings.showLockerSimulator !== false ? "translate-x-6" : "translate-x-0"
+                  }`} />
+                </button>
               </div>
 
               {/* Slogan Customization: Hero Section Texts */}
@@ -434,6 +815,77 @@ export default function AdminPanel({
                 </div>
               </div>
 
+              {/* Corporate Contact Info & Footer Settings */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-bold text-violet-400 tracking-wider uppercase border-b border-slate-800 pb-1.5">대표 기업 문의처 및 하단 푸터 정보 관리</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1">본사 고객상담 전화번호</label>
+                    <input
+                      type="text"
+                      value={settings.contactPhone || ""}
+                      placeholder="예시: 1566-0000"
+                      onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-800 rounded-lg text-xs text-white focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1">본사 공식 이메일 주소</label>
+                    <input
+                      type="text"
+                      value={settings.contactEmail || ""}
+                      placeholder="예시: support@korixa.com"
+                      onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-800 rounded-lg text-xs text-white focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1 font-mono">공식 카카오톡 채널 주소</label>
+                    <input
+                      type="text"
+                      value={settings.contactKakaoLink || ""}
+                      placeholder="예시: http://pf.kakao.com/_xxxx"
+                      onChange={(e) => setSettings({ ...settings, contactKakaoLink: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-800 rounded-lg text-xs text-white focus:outline-none font-mono"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-400 mb-1">본사 등록 법인 주소지</label>
+                  <input
+                    type="text"
+                    value={settings.contactAddress || ""}
+                    placeholder="예시: 서울특별시 강남구 테헤란로..."
+                    onChange={(e) => setSettings({ ...settings, contactAddress: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-800 rounded-lg text-xs text-white focus:outline-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1 font-mono">공식 인스타그램 주소 (URL)</label>
+                    <input
+                      type="text"
+                      value={settings.contactInstaLink || ""}
+                      placeholder="예시: https://instagram.com/..."
+                      onChange={(e) => setSettings({ ...settings, contactInstaLink: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-800 rounded-lg text-xs text-white focus:outline-none font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1 font-mono">공식 링크드인 주소 (URL)</label>
+                    <input
+                      type="text"
+                      value={settings.contactLinkedinLink || ""}
+                      placeholder="예시: https://linkedin.com/in/..."
+                      onChange={(e) => setSettings({ ...settings, contactLinkedinLink: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-800 rounded-lg text-xs text-white focus:outline-none font-mono"
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Service description customization */}
               <div className="space-y-4">
                 <h4 className="text-xs font-bold text-violet-400 tracking-wider uppercase border-b border-slate-800 pb-1.5">서비스 세부 소개 수정</h4>
@@ -444,7 +896,7 @@ export default function AdminPanel({
                       rows={3}
                       value={settings.logoDesignDescription}
                       onChange={(e) => setSettings({ ...settings, logoDesignDescription: e.target.value })}
-                      className="w-full p-3 rounded-lg bg-slate-800 text-xs focus:outline-none border border-slate-700 text-white"
+                      className="w-full p-3 rounded-lg bg-slate-800 text-xs focus:outline-none border border-slate-700 text-white animate-none"
                     />
                   </div>
                   <div>
@@ -453,7 +905,7 @@ export default function AdminPanel({
                       rows={3}
                       value={settings.webDevelopmentDescription}
                       onChange={(e) => setSettings({ ...settings, webDevelopmentDescription: e.target.value })}
-                      className="w-full p-3 rounded-lg bg-slate-800 text-xs focus:outline-none border border-slate-700 text-white"
+                      className="w-full p-3 rounded-lg bg-slate-800 text-xs focus:outline-none border border-slate-700 text-white animate-none"
                     />
                   </div>
                 </div>
@@ -535,14 +987,33 @@ export default function AdminPanel({
                     </div>
                     <div>
                       <label className="block text-[11px] font-bold text-slate-400 mb-1">대표 Unsplash 이미지 주소</label>
-                      <input
-                        type="text"
-                        value={portForm.imageUrl}
-                        onChange={(e) => setPortForm({ ...portForm, imageUrl: e.target.value })}
-                        className="w-full px-3 py-2 bg-slate-800 rounded text-xs text-white focus:outline-none font-mono"
-                      />
+                      <div className="flex gap-1.5">
+                        <input
+                          type="text"
+                          value={portForm.imageUrl}
+                          onChange={(e) => setPortForm({ ...portForm, imageUrl: e.target.value })}
+                          className="flex-1 px-3 py-2 bg-slate-800 rounded text-xs text-white focus:outline-none font-mono"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPortImgTools(!showPortImgTools)}
+                          className="px-2.5 bg-slate-705 hover:bg-slate-600 rounded text-[10px] text-violet-300 font-bold shrink-0 cursor-pointer"
+                        >
+                          {showPortImgTools ? "도구 닫기" : "📷 업로드 / 기기/프리셋"}
+                        </button>
+                      </div>
                     </div>
                   </div>
+
+                  {showPortImgTools && (
+                    <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                      <span className="block text-[10px] font-extrabold text-violet-400 mb-2">📂 납품 포트폴리오 실적 사진 업로드 및 스톡 매칭</span>
+                      <AdminImageSelector
+                        currentUrl={portForm.imageUrl}
+                        onSelect={(url) => setPortForm({ ...portForm, imageUrl: url })}
+                      />
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-[11px] font-bold text-slate-400 mb-1 font-mono">프로젝트 상세 설명</label>
@@ -675,12 +1146,21 @@ export default function AdminPanel({
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-[11px] font-bold text-slate-400 mb-1">메인 대표 이미지 Unsplash 주소</label>
-                      <input
-                        type="text"
-                        value={blogForm.imageUrl}
-                        onChange={(e) => setBlogForm({ ...blogForm, imageUrl: e.target.value })}
-                        className="w-full px-3 py-2 bg-slate-800 rounded text-xs text-white focus:outline-none font-mono"
-                      />
+                      <div className="flex gap-1.5">
+                        <input
+                          type="text"
+                          value={blogForm.imageUrl}
+                          onChange={(e) => setBlogForm({ ...blogForm, imageUrl: e.target.value })}
+                          className="flex-1 px-3 py-2 bg-slate-800 rounded text-xs text-white focus:outline-none font-mono"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowBlogImgTools(!showBlogImgTools)}
+                          className="px-2.5 bg-slate-705 hover:bg-slate-600 rounded text-[10px] text-violet-300 font-bold shrink-0 cursor-pointer"
+                        >
+                          {showBlogImgTools ? "도구 소접" : "📷 이미지 매치"}
+                        </button>
+                      </div>
                     </div>
                     <div>
                       <label className="block text-[11px] font-bold text-slate-400 mb-1">작성 일자 (예: 2026.05.28)</label>
@@ -702,6 +1182,16 @@ export default function AdminPanel({
                       />
                     </div>
                   </div>
+
+                  {showBlogImgTools && (
+                    <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                      <span className="block text-[10px] font-extrabold text-violet-400 mb-2">📂 블로그 칼럼 이미지 초고속 업로드 및 검색 매칭</span>
+                      <AdminImageSelector
+                        currentUrl={blogForm.imageUrl}
+                        onSelect={(url) => setBlogForm({ ...blogForm, imageUrl: url })}
+                      />
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-[11px] font-bold text-slate-400 mb-1">요약 메타 코멘트 (두줄 내외)</label>

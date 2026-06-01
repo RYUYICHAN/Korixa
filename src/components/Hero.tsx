@@ -472,10 +472,10 @@ export default function Hero({ settings, onContactClick }: HeroProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
-          {/* LEFT: Slogan and text (7 Columns) */}
-          <div className="lg:col-span-6 flex flex-col space-y-6">
+          {/* LEFT: Slogan and text (7 Columns or Centered Full Width) */}
+          <div className={`${settings.showLockerSimulator !== false ? "lg:col-span-6 text-left items-start" : "lg:col-span-12 text-center items-center max-w-4xl mx-auto"} flex flex-col space-y-6`}>
             {/* Elegant Tagline Badge */}
-            <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-semibold self-start tracking-tight ${getAccentBorderClass()}`}>
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-semibold tracking-tight ${settings.showLockerSimulator !== false ? "self-start" : "self-center"} ${getAccentBorderClass()}`}>
               <Sparkles className="w-3.5 h-3.5 animate-pulse text-amber-500" />
               <span className="font-sans">대한민국 실시간 클라우드 스마트 사물함 No.1</span>
             </div>
@@ -489,7 +489,7 @@ export default function Hero({ settings, onContactClick }: HeroProps) {
             </h1>
 
             {/* Custom Slogan Describing 2-column, 5-row specs */}
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xl">
+            <p className={`text-gray-600 text-sm sm:text-base leading-relaxed ${settings.showLockerSimulator !== false ? "max-w-xl" : "max-w-3xl"}`}>
               정밀 하드웨어 공학으로 빚어낸 <strong className="text-gray-900 font-bold">2열 5단(10개 칸 + 중앙 키오스크)</strong> 표준 세트 구축 방식의 대표 국가브랜드 코릭사입니다. IoT 원격 무선 제어 통신을 완비한 최고의 보안 인프라를 스마트폰 및 키오스크 연동을 통해 입체적으로 직접 제어해 보세요.
             </p>
 
@@ -539,7 +539,8 @@ export default function Hero({ settings, onContactClick }: HeroProps) {
           </div>
 
           {/* RIGHT: High-fidelity visual twin simulator with interactive layout (6 Columns) */}
-          <div className="lg:col-span-6 relative flex flex-col items-center">
+          {settings.showLockerSimulator !== false && (
+            <div className="lg:col-span-6 relative flex flex-col items-center">
             
             {/* Glowing active ambient rings */}
             <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-tr from-violet-200/30 via-orange-100/30 to-emerald-100/30 rounded-full filter blur-3xl z-0 pointer-events-none" />
@@ -1379,6 +1380,7 @@ export default function Hero({ settings, onContactClick }: HeroProps) {
 
             </div>
           </div>
+        )}
 
         </div>
       </div>

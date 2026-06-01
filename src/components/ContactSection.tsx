@@ -33,12 +33,12 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
 
   const offices: OfficeLocation[] = [
     {
-      name: "인천 청라 본사 (HQ)",
-      address: "인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호",
-      tel: "",
+      name: `${settings.agencyName || "KORIXA"} 본사 (HQ)`,
+      address: settings.contactAddress || "인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호",
+      tel: settings.contactPhone || "010-4492-3810",
       hours: "월 - 금, 09:30 ~ 18:30 (점심시간 12:30 ~ 13:30)",
       desc: "IoT 통합 원격 제어 및 고유 Pantone 색상 개발 총괄 본사.",
-      mapEmbedUrl: "https://maps.google.com/maps?q=%EC%9D%B8%EC%B2%9C%EC%8B%9C%20%EC%84%9C%EA%B5%AC%20%EC%A4%91%EB%B4%89%EB%8C%80%EB%A1%9C%20490%20%EC%B2%AD%EB%9D%BC%EB%8D%94%EB%A6%AC%EB%B8%8C%ED%8B%B0%EC%95%84%EB%AA%A8&t=&z=16&ie=UTF8&iwloc=&output=embed"
+      mapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(settings.contactAddress || "인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호")}&t=&z=16&ie=UTF8&iwloc=&output=embed`
     }
   ];
 
@@ -277,15 +277,15 @@ export default function ContactSection({ settings, onAddInquiry }: ContactSectio
                     <MapPin className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
                     <span>{offices[activeOfficeIndex].address}</span>
                   </div>
-                  {offices[activeOfficeIndex].tel && (
+                  {settings.contactPhone && (
                     <div className="flex items-center gap-2">
                       <Phone className="w-4 h-4 text-gray-400 shrink-0" />
-                      <span>{offices[activeOfficeIndex].tel}</span>
+                      <span>문의전화: {settings.contactPhone}</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-gray-400 shrink-0" />
-                    <span>admin@korixa.co.kr</span>
+                    <span>이메일: {settings.contactEmail || "admin@korixa.co.kr"}</span>
                   </div>
                 </div>
               </div>

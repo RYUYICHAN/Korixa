@@ -3,6 +3,14 @@
  */
 
 import { SiteSettings, PortfolioItem, BlogItem, Inquiry, SEOMeta } from "./types";
+import multiSmartLockerImg from "./assets/images/multi_smart_locker_1780288326712.png";
+import luxurySharedStorageImg from "./assets/images/luxury_shared_storage_1780289028631.png";
+import absPlasticLockersRowImg from "./assets/images/abs_plastic_lockers_row_1780289044522.png";
+import woodenLockersImg from "./assets/images/wooden_lockers_1780289421370.png";
+import refrigeratedLockersImg from "./assets/images/refrigerated_lockers_1780289440809.png";
+import phoneChargeLockerImg from "./assets/images/phone_charge_locker_1780289916881.png";
+import smartStockLockerImg from "./assets/images/smart_stock_locker_1780289935468.png";
+import wireLuggageLockerImg from "./assets/images/wire_luggage_locker_1780290077952.png";
 
 export const defaultSiteSettings: SiteSettings = {
   agencyName: "KORIXA",
@@ -12,7 +20,19 @@ export const defaultSiteSettings: SiteSettings = {
   heroTitle: "IoT 기술과 정밀 공학이 빚어낸 차세대 보관 솔루션, 코릭사.",
   heroSubtitle: "코릭사(KORIXA)는 보라색, 주황색, 녹색의 고유 컬러 아이덴티티와 최첨단 제어 시스템을 결합하여, 스마트 오피스 신사옥, 지하철역, 아파트, 레포츠 시설에 최고 안전 등급의 스마트 락커를 설계·제작·설치합니다.",
   logoDesignDescription: "인공지능(AI)과 사물인터넷(IoT) 기술이 결합되어 실시간 상태 관제, 생체인증/QR/PIN 멀티 수단 언락, 원격 제어 및 키오스크 주문 연동 시스템을 완비한 4차 산업형 차세대 스마트 보관 시스템입니다.",
-  webDevelopmentDescription: "오랜 시간 녹슬지 않는 프리미엄 친환경 고압 분체 도장, 정밀 강판 절곡 제조 및 충격 분산형 실린더 도어 시스템을 도입하여 최고의 내구성과 심미적인 퍼플-오렌지-그린 하이테크 익스테리어를 실현합니다."
+  webDevelopmentDescription: "오랜 시간 녹슬지 않는 프리미엄 친환경 고압 분체 도장, 정밀 강판 절곡 제조 및 충격 분산형 실린더 도어 시스템을 도입하여 최고의 내구성과 심미적인 퍼플-오렌지-그린 하이테크 익스테리어를 실현합니다.",
+  // Expanded customizable parameters default values
+  customAccentHex: "#8B5CF6", // matches purple
+  customThemeMode: "light",
+  headingFontSizeOffset: 0, // 0 offset initially
+  bodyFontSizeOffset: 0,
+  contactEmail: "admin@korixa.co.kr",
+  contactPhone: "010-4492-3810",
+  contactAddress: "인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호",
+  contactInstaLink: "https://instagram.com/kor_locker",
+  contactKakaoLink: "https://pf.kakao.com/_korixa",
+  contactLinkedinLink: "https://linkedin.com/company/korixa",
+  showLockerSimulator: true
 };
 
 export const defaultPortfolios: PortfolioItem[] = [
@@ -21,7 +41,7 @@ export const defaultPortfolios: PortfolioItem[] = [
     title: "유료 및 무료 다기능 스마트 사물함 (KORIXA Multi Smart Locker)",
     category: "Smart",
     client: "스파렉스 랜드 및 전국 공공 문화체육센터",
-    imageUrl: "https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&q=80&w=600",
+    imageUrl: multiSmartLockerImg,
     description: "터치스크린 키오스크와 QR코드, 신용카드 결제 엔진이 탑재되어 유료/무료 동적 모드 설정이 실시간으로 지원되는 최첨단 지능형 보관 솔루션입니다.",
     date: "2026.03"
   },
@@ -30,7 +50,7 @@ export const defaultPortfolios: PortfolioItem[] = [
     title: "세대별 주거지 및 빌딩 공용 통합 사물함 (KORIXA Resident Shared Locker)",
     category: "Smart",
     client: "헬리오시티 대단지 아파트 및 업무용 메가타워 빌딩",
-    imageUrl: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&q=80&w=600",
+    imageUrl: luxurySharedStorageImg,
     description: "입주민 NFC 카드 및 모바일 동기화 전용 키패드가 결합된 세대 매칭형 공용 택배 및 물품 보관 사물함으로 공간 편의성과 방수 보안을 완비하였습니다.",
     date: "2026.04"
   },
@@ -39,7 +59,7 @@ export const defaultPortfolios: PortfolioItem[] = [
     title: "프리미엄 무소음 ABS 플라스틱 사물함 (KORIXA Tough ABS Locker)",
     category: "Standard",
     client: "강남 명문 오션 피트니스 및 스포츠 사우나 락커룸",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=600",
+    imageUrl: absPlasticLockersRowImg,
     description: "부식과 충격에 극도로 강한 친환경 고강도 ABS 재질을 채택하여 물기가 많은 레포츠 시설 및 실외에서도 뒤틀림이나 녹 발생 없이 반영구적으로 보존됩니다.",
     date: "2026.02"
   },
@@ -48,17 +68,17 @@ export const defaultPortfolios: PortfolioItem[] = [
     title: "원목 감성의 최고급 목재 친환경 사물함 (KORIXA Crafted Wood Locker)",
     category: "Standard",
     client: "대기업 본사 오피스 임원실 및 청담 프라이빗 라운지",
-    imageUrl: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=600",
+    imageUrl: woodenLockersImg,
     description: "유해물질 방출 제로 친환경 도료를 입힌 고밀도 원목 질감 보드로 맞춤 제작되어 중후한 품격을 선사하며, 원격 실린더 스마트락이 빌트인되어 마찰을 제어합니다.",
     date: "2026.05"
   },
   {
     id: "port-5",
-    title: "정밀 강판 절곡 고기능 철제 사물함 (KORIXA Heavy Steel Cabinets)",
-    category: "Standard",
-    client: "현대 정밀 생산 기지 및 남동공단 물류 스마트 연구실",
-    imageUrl: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&q=80&w=600",
-    description: "정밀 절곡 1.2t 고강도 아연강판과 Pantone 색상을 완전하게 구현하는 고온 친환경 분체도장을 적용하여 물리적인 외압 및 기후 변화에도 녹과 변색 없이 내구성을 지킵니다.",
+    title: "고성능 콜드체인 스마트 냉장 보관함 (KORIXA Air-Chilled Smart Locker)",
+    category: "Smart",
+    client: "대중교통 지하철역 및 신선식품 대단지 홈픽업센터",
+    imageUrl: refrigeratedLockersImg,
+    description: "개별 보관칸마다 독립식 자동 적정온도 제어 및 고효율 공기 순환 팬이 내장되어, 온-오프라인 연동 모바일 앱을 통한 프레시 물품/식자재/밀키트 신선 관리가 실시간 지원되는 최첨단 하이테크 스마트 냉장 솔루션입니다.",
     date: "2026.01"
   },
   {
@@ -66,7 +86,7 @@ export const defaultPortfolios: PortfolioItem[] = [
     title: "스마트 전자기기 및 핸드폰 특화 보관함 (KORIXA Tech Cradle Mobile)",
     category: "Special",
     client: "판교 바이오 R&D 연구센터 및 테크노밸리 보안 회의실",
-    imageUrl: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=600",
+    imageUrl: phoneChargeLockerImg,
     description: "개별 수납 칸마다 고성능 충전 고속 커넥터와 도난 방지용 전자 감지 키패드가 탑재된 정보 보안 전용 핸드폰 및 태블릿 특화 보관 솔루션입니다.",
     date: "2026.05"
   },
@@ -75,17 +95,17 @@ export const defaultPortfolios: PortfolioItem[] = [
     title: "AI 센서 기반 지능형 재고관리 사물함 (KORIXA Smart Stock-Keeper)",
     category: "Special",
     client: "종합 의료원 특수 전문 의약품실 및 자재 물류 허브",
-    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600",
+    imageUrl: smartStockLockerImg,
     description: "잠금 장치 실시간 관제와 정밀 중량 마이크로 센서가 결합하여 물품 입출고 내역이 즉시 클라우드망에 기록 완료되고 보관칸 재고 수량이 자동 동기화됩니다.",
     date: "2026.05"
   },
   {
     id: "port-8",
-    title: "스마트 호텔 캐리어 & 대형 수하물 보관함 (KORIXA Luggage Butler)",
+    title: "스마트 하이브리드 캐리어 & 대형 수하물 보관함 (KORIXA Luggage Butler Plus)",
     category: "Special",
     client: "파라다이스 백화점 광장 및 공항 허브 리조트 라운지",
-    imageUrl: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=600",
-    description: "초대형 여행용 캐리어와 골프백 등을 직립 보관하도록 맞춤 특화된 대형 스토리지 시스템으로, 터치 키오스크 결제 연동 제어로 장갑이나 손 보호 기능을 극대화하였습니다.",
+    imageUrl: wireLuggageLockerImg,
+    description: "상단부는 안심 밀폐식 디지털 보관함으로 구성하고, 하단 레벨은 대형 캐리어와 골프백을 전자식 고강도 스틸 와이어 케이블(Tether)로 단단히 묶어 직관적이고 여유롭게 잠금 관리하는 프리미엄 하이브리드 수하물 보관 솔루션입니다.",
     date: "2026.04"
   }
 ];

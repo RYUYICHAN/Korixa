@@ -12,6 +12,18 @@ export interface SiteSettings {
   heroSubtitle: string;
   logoDesignDescription: string;
   webDevelopmentDescription: string;
+  // Expanded customizable parameters for the ultimate editor experience:
+  customAccentHex?: string; // e.g. #3b82f6 for blue, any custom user color
+  customThemeMode?: "light" | "dark" | "ivory" | "midnight"; 
+  headingFontSizeOffset?: number; // offset in px or % for headings adjustments
+  bodyFontSizeOffset?: number; // offsets
+  contactEmail?: string;
+  contactPhone?: string;
+  contactAddress?: string;
+  contactInstaLink?: string;
+  contactKakaoLink?: string;
+  contactLinkedinLink?: string;
+  showLockerSimulator?: boolean; // toggle to hide/show hero lockers flow
 }
 
 export interface PortfolioItem {

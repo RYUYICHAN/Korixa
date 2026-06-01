@@ -48,10 +48,22 @@ export default function App() {
         // Check if there are legacy images that mismatch product descriptions (e.g. grass, high-vis jacket, bicycle)
         const hasLegacyImages = parsed.some(
           (item: any) =>
+            item.imageUrl.includes("luxury_luggage_locker") || // old luxury luggage locker without tethers
+            (item.id === "port-8" && !item.title.includes("Plus")) ||
+            item.imageUrl.includes("1558002038-1055907df827") || // old port-6 unsplash
+            item.imageUrl.includes("1584622650111-993a426fbf0a") || // old port-7 unsplash
+            item.imageUrl.includes("1540555700478-4be289fbecef") || // old port-8 unsplash
+            item.imageUrl.includes("1574634534894") || // old multi smart locker image
+            item.imageUrl.includes("1520038410233") || // old basement locker image
+            item.imageUrl.includes("1540575467063") || // old ABS plastic locker image
+            item.imageUrl.includes("basement_cage_locker") || // old prison-like cages basement locker image
+            item.imageUrl.includes("abs_plastic_locker_1780288762071") || // old single plastic locker image
             item.imageUrl.includes("1510074377623") ||
             item.imageUrl.includes("1535131749006") ||
             item.imageUrl.includes("1504917595217") ||
-            item.imageUrl.includes("1584622650111-993a426fbf0a") // replace old port-6 tech locker image with tapping keyless pad
+            item.imageUrl.includes("1586023492125") || // old wood locker unsplash
+            item.imageUrl.includes("1595246140625") || // old steel locker unsplash
+            (item.id === "port-5" && item.category !== "Smart")
         );
         // Force sync with newly updated comprehensive defaultPortfolios if legacy cache is detected
         if (hasLegacyCategory || hasLegacyImages || parsed.length < defaultPortfolios.length) {
@@ -168,25 +180,154 @@ export default function App() {
     }
   };
 
-  const getAccentBgClass = () => {
-    switch (settings.accentColor) {
-      case "green":
-        return "bg-emerald-500";
-      case "purple":
-        return "bg-violet-500";
-      case "orange":
-        return "bg-orange-500";
-    }
-  };
-
   const handleContactClick = () => {
     setActiveSection("contact");
     const el = document.getElementById("contact");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Brand overrides color and sizing converter
+  const customAccentColor = settings.customAccentHex || (settings.accentColor === "green" ? "#10B981" : settings.accentColor === "orange" ? "#F97316" : "#8B5CF6");
+  
+  const getThemeVars = () => {
+    switch (settings.customThemeMode) {
+      case "dark":
+        return {
+          bg: "#0f172a",
+          cardBg: "#1e293b",
+          text: "#f8fafc",
+          textMuted: "#94a3b8",
+          border: "#334155"
+        };
+      case "ivory":
+        return {
+          bg: "#faf5ec",
+          cardBg: "#f4ede0",
+          text: "#1c120c",
+          textMuted: "#5c4d44",
+          border: "#decfbd"
+        };
+      case "midnight":
+        return {
+          bg: "#030712",
+          cardBg: "#0b0f19",
+          text: "#f3f4f6",
+          textMuted: "#9ca3af",
+          border: "#1f2937"
+        };
+      default: // light
+        return {
+          bg: "#ffffff",
+          cardBg: "#f8fafc",
+          text: "#0f172a",
+          textMuted: "#4b5563",
+          border: "#e5e7eb"
+        };
+    }
+  };
+
+  const themeVars = getThemeVars();
+
   return (
     <div id="app-root-container" className={`${getFontClass()} bg-white min-h-screen text-gray-900 selection:bg-slate-100 relative transition-colors duration-300`}>
+      
+      {/* 0. Real-time Injector of Custom Style Configurations */}
+      <style>{`
+        :root {
+          --brand-primary: ${customAccentColor};
+          --brand-bg: ${themeVars.bg};
+          --brand-card: ${themeVars.cardBg};
+          --brand-text: ${themeVars.text};
+          --brand-text-muted: ${themeVars.textMuted};
+          --brand-border: ${themeVars.border};
+          --h-offset: ${settings.headingFontSizeOffset || 0}px;
+          --b-offset: ${settings.bodyFontSizeOffset || 0}px;
+        }
+
+        /* Accent text overrides */
+        .text-violet-500, .text-emerald-500, .text-orange-500 {
+          color: var(--brand-primary) !important;
+        }
+        
+        /* Accent background overrides */
+        .bg-violet-500, .bg-emerald-500, .bg-orange-500 {
+          background-color: var(--brand-primary) !important;
+        }
+
+        .hover\\:bg-violet-600:hover, .hover\\:bg-emerald-600:hover, .hover\\:bg-orange-600:hover {
+          background-color: var(--brand-primary) !important;
+          filter: brightness(0.9) !important;
+        }
+
+        /* Border overrides */
+        .border-violet-500, .border-emerald-500, .border-orange-500 {
+          border-color: var(--brand-primary) !important;
+        }
+
+        .border-violet-100, .border-emerald-100, .border-orange-100 {
+          border-color: var(--brand-border) !important;
+        }
+
+        .bg-violet-50, .bg-emerald-50, .bg-orange-50 {
+          background-color: var(--brand-card) !important;
+        }
+
+        /* Real-time Theme Overrides on Container */
+        #app-root-container {
+          background-color: var(--brand-bg) !important;
+          color: var(--brand-text) !important;
+        }
+
+        /* Global Typography Scaling Overrides */
+        h1, h2, h3, .heading-scale {
+          font-size: calc(100% + var(--h-offset)) !important;
+        }
+        
+        p, span:not(.font-mono), li, label, textarea, input, .body-scale {
+          font-size: calc(100% + var(--b-offset)) !important;
+        }
+
+        /* Card theme overlays */
+        #services .bg-white, #portfolio .bg-white, #blog .bg-white, #contact .bg-white {
+          background-color: var(--brand-card) !important;
+          color: var(--brand-text) !important;
+          border-color: var(--brand-border) !important;
+        }
+
+        /* Change section layouts backgrounds natively based on selected theme */
+        #services, #portfolio, #blog, #contact {
+          background-color: var(--brand-bg) !important;
+          border-color: var(--brand-border) !important;
+        }
+
+        /* Input overrides */
+        #contact input, #contact textarea, #contact select {
+          background-color: var(--brand-card) !important;
+          border-color: var(--brand-border) !important;
+          color: var(--brand-text) !important;
+        }
+
+        input:focus, textarea:focus, select:focus {
+          border-color: var(--brand-primary) !important;
+        }
+
+        /* Navbar & footer adaptive dark controls */
+        nav {
+          background-color: ${settings.customThemeMode === "light" ? "rgba(255, 255, 255, 0.82)" : "rgba(11, 15, 25, 0.82)"} !important;
+          border-color: var(--brand-border) !important;
+        }
+        nav button {
+          color: ${settings.customThemeMode === "light" ? "#1e293b" : "#f1f5f9"} !important;
+        }
+        nav button:hover {
+          color: var(--brand-primary) !important;
+        }
+
+        /* Map and indicator accents */
+        .glow-green {
+          box-shadow: 0 0 15px ${customAccentColor}22 !important;
+        }
+      `}</style>
       
       {/* 1. Header Navigation */}
       <Navbar
@@ -241,18 +382,18 @@ export default function App() {
             <div className="md:col-span-5 space-y-4">
               <KORIXALogo size="md" light={true} />
               <p className="text-gray-400 text-xs sm:text-sm max-w-sm leading-relaxed">
-                {settings.agencySlogan} - KORIXA는 대한민국 사물함 및 무인 스마트 보관함의 가치를 최고급 디자인과 첨단 IoT 공학으로 새롭게 정의합니다.
+                {settings.agencySlogan} - {settings.agencyName || "KORIXA"}는 대한민국 사물함 및 무인 스마트 보관함의 가치를 최고급 디자인과 첨단 IoT 공학으로 새롭게 정의합니다.
               </p>
               
               {/* Custom Editable Links indicators */}
               <div className="flex gap-2.5 pt-2">
-                <a href="#instagram" className="p-2 bg-gray-900 hover:bg-gray-850 rounded-full border border-gray-800 transition text-gray-400 hover:text-white" title="Instagram">
+                <a href={settings.contactInstaLink || "#instagram"} target="_blank" rel="noreferrer" className="p-2 bg-gray-900 hover:bg-gray-850 rounded-full border border-gray-800 transition text-gray-400 hover:text-white" title="Instagram">
                   <Instagram className="w-4 h-4" />
                 </a>
-                <a href="#kakaotalk" className="p-2 bg-gray-900 hover:bg-gray-850 rounded-full border border-gray-800 transition text-gray-400 hover:text-white" title="KakaoTalk">
+                <a href={settings.contactKakaoLink || "#kakaotalk"} target="_blank" rel="noreferrer" className="p-2 bg-gray-900 hover:bg-gray-850 rounded-full border border-gray-800 transition text-gray-400 hover:text-white" title="KakaoTalk">
                   <MessageCircle className="w-4 h-4" />
                 </a>
-                <a href="#linkedin" className="p-2 bg-gray-900 hover:bg-gray-850 rounded-full border border-gray-800 transition text-gray-400 hover:text-white" title="LinkedIn">
+                <a href={settings.contactLinkedinLink || "#linkedin"} target="_blank" rel="noreferrer" className="p-2 bg-gray-900 hover:bg-gray-850 rounded-full border border-gray-800 transition text-gray-400 hover:text-white" title="LinkedIn">
                   <Linkedin className="w-4 h-4" />
                 </a>
               </div>
@@ -279,12 +420,13 @@ export default function App() {
 
             {/* Contacts Hub (4 columns) */}
             <div className="md:col-span-4 space-y-4">
-              <h4 className="text-xs uppercase font-extrabold text-gray-400 tracking-widest border-b border-gray-900 pb-1.5 font-mono">KORIXA 본사</h4>
+              <h4 className="text-xs uppercase font-extrabold text-gray-400 tracking-widest border-b border-gray-900 pb-1.5 font-mono">{settings.agencyName || "KORIXA"} 본사</h4>
               <p className="text-xs text-gray-400 leading-relaxed">
-                본사 : 인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호
+                본사 : {settings.contactAddress || "인천시 서구 중봉대로 490 청라더리브티아모 지식산업센터 1064호"}
               </p>
-              <div className="text-xs text-gray-400 font-mono pt-1">
-                <span>메일 : admin@korixa.co.kr</span>
+              <div className="text-xs text-gray-400 font-mono pt-1 space-y-1">
+                <div>메일 : {settings.contactEmail || "admin@korixa.co.kr"}</div>
+                {settings.contactPhone && <div>전화 : {settings.contactPhone}</div>}
               </div>
             </div>
 
@@ -293,12 +435,12 @@ export default function App() {
           {/* Lower Legal Frame */}
           <div className="pt-8 border-t border-gray-900 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-550 font-medium">
             <p className="text-gray-500">
-              © 2026 KORIXA Management Group. All rights reserved. Registered under {seoSettings.author}.
+              © 2026 {settings.agencyName || "KORIXA"} Management Group. All rights reserved. Registered under {seoSettings.author}.
             </p>
             <div className="flex gap-4 text-gray-500">
               <span className="hover:text-white cursor-pointer hover:underline">개인정보 처리방침</span>
               <span>|</span>
-              <span className="hover:text-white cursor-pointer hover:underline text-[11px] font-mono">V1.5 (PROD BUILD)</span>
+              <span className="hover:text-white cursor-pointer hover:underline text-[11px] font-mono">V1.8 (ADVANCED DYNAMIC BUILD)</span>
             </div>
           </div>
         </div>
